@@ -1,0 +1,12 @@
+[package]
+name = "openinference-semantic-conventions-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tracing = { version = "0.1.40", features = ["valuable"] }
+tracing-opentelemetry = "0.24.0"
+opentelemetry = "0.23.0"
+serde_json = "1.0.120"
+serde = { version = "1.0.204", features = ["derive"] }
+derive_builder = "0.20.0"
