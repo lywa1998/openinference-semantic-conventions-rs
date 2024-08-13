@@ -1,4 +1,4 @@
-use derive_builder::Builder;
+use bon::builder;
 use serde::Serialize;
 use serde_json::Value;
 use tracing_opentelemetry::OpenTelemetrySpanExt;
@@ -92,26 +92,29 @@ into_span!(
     (Reranker, RerankerAttributes),
 );
 
-#[derive(Debug, Serialize, Builder)]
+#[derive(Debug, Serialize)]
+#[builder]
 pub struct AgentAttributes {
     input: Input,
     output: Output,
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct Input {
     #[serde(rename = "input.value")]
-    pub value: String,
+    value: String,
     #[serde(rename = "input.mime_type")]
-    pub mime_type: MimeType,
+    mime_type: MimeType,
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct Output {
     #[serde(rename = "output.value")]
-    pub value: String,
+    value: String,
     #[serde(rename = "output.mime_type")]
-    pub mime_type: MimeType,
+    mime_type: MimeType,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -122,41 +125,43 @@ pub enum MimeType {
     Json,
 }
 
-#[derive(Debug, Serialize, Builder)]
+#[derive(Debug, Serialize)]
+#[builder]
 pub struct LlmAttributes {
     #[serde(rename = "llm.model_name")]
-    pub model_name: String,
+    model_name: String,
     #[serde(rename = "llm.input_messages")]
-    pub input_messages: Vec<Message>,
-    pub prompts: ChainAttributes,
+    input_messages: Vec<Message>,
+    prompts: ChainAttributes,
     #[serde(rename = "llm.output_messsages")]
-    pub output_messages: Vec<Message>,
+    output_messages: Vec<Message>,
     #[serde(rename = "llm.function_call")]
-    pub function_call: Value,
+    function_call: Value,
     #[serde(rename = "llm.onvocation_parameters")]
-    pub invocation_parameters: Value,
+    invocation_parameters: Value,
 }
 
-#[derive(Debug, Clone, Serialize, Builder)]
+#[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct ChainAttributes {
     #[serde(rename = "llm.prompt_template.template")]
-    #[builder(setter(into))]
-    pub template: String,
+    template: String,
     #[serde(rename = "llm.prompt_template.varables")]
-    pub variables: Value,
+    variables: Value,
     #[serde(rename = "llm.prompt_template.version")]
-    #[builder(setter(into))]
-    pub version: String,
+    version: String,
 }
 
 #[derive(Debug, Serialize)]
+#[builder]
 pub struct TokenCount {
-    pub completion: i32,
-    pub prompt: i32,
-    pub total: i32,
+    completion: i32,
+    prompt: i32,
+    total: i32,
 }
 
 #[derive(Debug, Serialize)]
+#[builder]
 pub struct Tool {
     #[serde(rename = "tool.name")]
     pub name: String,
@@ -167,6 +172,7 @@ pub struct Tool {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct Message {
     #[serde(rename = "message.role")]
     role: MessageRole,
@@ -189,27 +195,30 @@ pub enum MessageRole {
     System,
 }
 
-#[derive(Debug, Serialize, Builder)]
+#[derive(Debug, Serialize)]
+#[builder]
 pub struct RetrieverAttributes {
     #[serde(rename = "retriever.documents")]
-    pub documents: Vec<Document>,
+    documents: Vec<Document>,
 }
 
-#[derive(Debug, Serialize, Builder)]
+#[derive(Debug, Serialize)]
+#[builder]
 pub struct RerankerAttributes {
     #[serde(rename = "reranker.input_documents")]
-    pub input_documents: Vec<Document>,
+    input_documents: Vec<Document>,
     #[serde(rename = "reranker.output_documents")]
-    pub output_documents: Vec<Document>,
+    output_documents: Vec<Document>,
     #[serde(rename = "reranker.query")]
-    pub query: String,
+    query: String,
     #[serde(rename = "reranker.model_name")]
-    pub model_name: String,
+    model_name: String,
     #[serde(rename = "reranker.top_k")]
-    pub top_k: i32,
+    top_k: i32,
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct Document {
     id: DocumentId,
     content: String,
@@ -224,7 +233,8 @@ pub enum DocumentId {
     Uuid(String),
 }
 
-#[derive(Debug, Serialize, Builder)]
+#[derive(Debug, Serialize)]
+#[builder]
 pub struct EmbeddingAttributes {
     #[serde(rename = "embedding.model_name")]
     pub model_name: String,
@@ -233,6 +243,7 @@ pub struct EmbeddingAttributes {
 }
 
 #[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct Embedding {
     #[serde(rename = "embedding.text")]
     pub text: String,
@@ -240,7 +251,8 @@ pub struct Embedding {
     pub vector: Vec<f32>,
 }
 
-#[derive(Debug, Clone, Serialize, Builder)]
+#[derive(Debug, Clone, Serialize)]
+#[builder]
 pub struct ToolCallAttributes {
     #[serde(rename = "tool_call.function.name")]
     pub name: String,

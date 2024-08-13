@@ -9,4 +9,4 @@ tracing-opentelemetry = "0.24.0"
 opentelemetry = "0.23.0"
 serde_json = "1.0.120"
 serde = { version = "1.0.204", features = ["derive"] }
-derive_builder = "0.20.0"
+bon = "1.2.1"
